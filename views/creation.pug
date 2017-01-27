@@ -36,7 +36,7 @@ block content
     var artists = [];
     var completed = 0;
     var access_token = '';
-    var playlistTitle = 'Testing';
+    var playlistTitle = '';
     var limitTracks = 5;
 
     function topTracksQuery(id) {
@@ -226,13 +226,13 @@ block content
               if (sum == 0) {
                   alert("No songs found.");
               } else {
-                  createPlaylist(playlistTitle, username, function(result) {
-                      if (result == null) {
+                  createPlaylist(playlistTitle, username, function(playlistID) {
+                      if (playlistID == null) {
                           alert("Couldn't create the playlist. Please start over.");
                       } else {
                           const tracks = allTracks.reduce((a, b) => {return a.concat(b);}, []);
-                          addTracksToPlaylist(username, result, tracks, function(addRes) {
-                              callback("spotify:user:" + username + ":playlist:" + playlistTitle);
+                          addTracksToPlaylist(username, playlistID, tracks, function(addRes) {
+                              callback("spotify:user:" + username + ":playlist:" + playlistID);
                           });
                       }
                   });
