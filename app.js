@@ -6,18 +6,8 @@ const request = require('request');
 
 const app = express();
 
-const clientID = '6f6011b81eaa4ccd934c2f64fbbaa9d9';
+const clientID = '5ba30de86695458089cdc5d89fe0fe9b';
 const redirectURI = 'http://localhost:3000/callback';
-
-const api = 'https://api.spotify.com';
-const artistSearchEndpoint = '/v1/search?q={artist-name}&type=artist';
-const topTracksEndpoint = '/v1/artists/{artist-id}/top-tracks?country=US';
-
-const topTracksLimit = 3;
-
-function topTracksQuery(artistID) {
-    return api + topTracksEndpoint.replace('{artist-id}', artistID);
-}
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
