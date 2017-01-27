@@ -1,0 +1,77 @@
+html {
+    height: 100%;
+    box-sizing: inherit;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    position: relative;
+    min-height: 100%;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #1DB954 !important;
+}
+
+a:hover {
+    color: #CCC !important;
+}
+
+.artist {
+    color: #fff !important;
+}
+
+.group {
+    margin-bottom: 20px;
+}
+
+.media {
+    height: 64px;
+    padding-bottom: 10px;
+}
+
+.media img {
+    padding-right: 5px;
+}
+
+.no-overflow {
+    max-width: 80vw;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 5px;
+    background-color: rgba(34, 34, 34, 0.9);
+    text-align: center;
+}
+
+.footer p {
+    padding-top: 10px;
+}
+
+.glyphicon.spinning {
+    animation: spin 2s infinite linear;
+    -webkit-animation: spin2 2s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
