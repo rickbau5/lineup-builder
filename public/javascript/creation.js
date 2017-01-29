@@ -31,15 +31,19 @@ function getUsername(callback) {
 function collectTopTracks(artists, callback) {
     var promises = artists.map(function (artist) {
         return getTopTracks(artist, function(topTracks) {
-            if (topTracks.length > limitTracks) {
-                return topTracks.splice(topTracks.length - limitTracks, topTracks.length);
-            }
             return topTracks;
         });
     });
     Promise.all(promises)
         .then(results => {
-            callback(results.map((result) => { return result.tracks; }));
+            const limited = results.map(list => {
+                var end = limitTracks;
+                if (limitTracks > list.tracks.length)
+                    end = list.tracks.length;
+                return list.tracks.slice(0, end);
+            });
+            console.log("Results:", limited);
+            callback(limited);
         }, error => { 
             console.log(error);
             callback([]);
@@ -84,12 +88,10 @@ function createPlaylist(title, username, callback) {
 }
 
 function addTracksToPlaylist(username, playlist, allTracks, callback) {
-    console.log(allTracks);
     var chunks = [], size = 100;
     while (allTracks.length > 0) {
         chunks.push(allTracks.splice(0, size));
     }
-    console.log(chunks);
 
     const url = 'https://api.spotify.com/v1/users/' + username +
         '/playlists/' + playlist +
@@ -132,6 +134,10 @@ $("#create-playlist").click(function() {
     if (verifyTitle() && verifyLimit()) {
         $("#create-playlist").attr('disabled', true);
         $("#progress").show();
+
+        console.log(limitTracks);
+        console.log(playlistTitle);
+
         go((uri) => {
             $("#progress").hide();
             $("#finished").show();
