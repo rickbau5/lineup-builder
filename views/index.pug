@@ -9,12 +9,13 @@ block content
           div
             textarea#artists.form-control(name="artists" rows="3" placeholder="Artist One, Artist Two, ...")
             span.help-block Enter up to 50 artists separated by commas.
-        div.btn-group(role="group" aria-label="...")
-          button#add-artists.btn.btn-default(type="button") Add Artists
-          button#create-playlist.btn.btn-default(type="button") Next Step
+        div.text-center
+          div.btn-group(role="group" aria-label="...")
+            button#add-artists.btn.btn-default(type="button") Add Artists
+            button#create-playlist.btn.btn-default(type="button") Next Step
   br
-  div
-    table.table.table-striped.table-hover.table-bordered
+  div#artist-wrapper
+    table#artist-table.table.table-striped.table-hover.table-bordered
       thead
         tr
           th Artist

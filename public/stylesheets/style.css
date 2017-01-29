@@ -1,19 +1,4 @@
-/* Large desktops and laptops */
-@media (min-width: 1200px) {
-    .custom-container {
-        max-width: 60%;
-    }
-}
-
-/* Landscape tablets and medium desktops */
-@media (min-width: 992px) and (max-width: 1199px) {
-    .custom-container {
-        max-width: 60%;
-    }
-}
-
-/* Portrait tablets and small desktops */
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px) {
     .custom-container {
         max-width: 60%;
     }
@@ -30,6 +15,11 @@
 @media (max-width: 480px) {
     .custom-container {
         max-width: 100%;
+    }
+
+    #artist-wrapper {
+        height: 300px;
+        overflow: auto;
     }
 }
 
@@ -50,10 +40,6 @@ body {
     padding-bottom: 6rem;
     min-height: 100%;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-.main {
-    margin: 0 auto;
 }
 
 .footer {
