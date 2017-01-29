@@ -9,8 +9,6 @@ const loading = '<i class="glyphicon glyphicon-refresh spinning"></i>';
 var found = [];
 
 $("#create-playlist").click(function() {
-    console.log("Creating playlist...");
-
     const request = "https://accounts.spotify.com/authorize" +
       "?client_id=" + clientID +
       "&response_type=token" +
@@ -19,7 +17,8 @@ $("#create-playlist").click(function() {
       //"&show_dialog=false";
 
     localStorage.setItem("artists-found", JSON.stringify(found));
-    window.open(request, 'asdf', 'WIDTH=400,HEIGHT=500');
+    location.href = request;
+    //window.open(request, 'asdf', 'WIDTH=400,HEIGHT=500');
 });
 
 $(document).on('click', 'button.artist-remove', function() {
@@ -40,7 +39,8 @@ function artistQuery(artistName) {
 $("#add-artists").click(function () {
     const artists = $("#artists").val()
       .split(/[,\n]/)
-      .map(function (str) { return str.trim().toLowerCase(); });
+      .map(str => { return str.trim().toLowerCase(); })
+      .filter(entry => { return entry !== '' });
 
     artists.forEach(function (artist) {
       const rowHtml = '<tr><td class="artist-name">' + artist + '</td>' + 
@@ -55,8 +55,16 @@ $("#add-artists").click(function () {
 
       $.get(artistQuery(artist), function(response) {
           if (response.artists && response.artists.items.length > 0) {
-              const artistName = response.artists.items[0].name;
-              const matches = found.filter(function (obj) { return obj.name === artistName; });
+              const exact = response.artists.items.filter(item=> {
+                    return item.name.toLowerCase() === artist.toLowerCase()
+              });
+              var theArtist;
+              if (exact.length > 0) {
+                  theArtist = exact[0];
+              } else {
+                  theArtist = response.artists.items[0];
+              }
+              const matches = found.filter(function (obj) { return obj.name === theArtist.name; });
               if (matches.length > 0) {
                 console.log("Already have " + artist);
                 row.remove();
@@ -65,9 +73,9 @@ $("#add-artists").click(function () {
               }
 
               tdFound.find("i").prop("class", "glyphicon glyphicon-ok");
-              tdName.html(artistName);
+              tdName.html(theArtist.name);
 
-              found.push(response.artists.items[0]);
+              found.push(theArtist);
               createBtn.prop("disabled", found.length == 0);
           } else {
               tdFound.find("i").prop("class", "glyphicon glyphicon-remove");
