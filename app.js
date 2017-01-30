@@ -19,10 +19,6 @@ app.use(express.static(__dirname + '/public'));
 app.set('vews', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-function redirectGET(path, target = '/') {
-    app.get(path, function(req, res) { res.redirect(target); } );
-}
-
 app.get('/', function(req, res) {
     return res.render('index', {
         clientID: clientID,
