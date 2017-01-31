@@ -1,5 +1,4 @@
 const async = require('async');
-const bodyParser = require('body-parser')
 const express = require('express');
 const path = require('path');
 const request = require('request');
@@ -8,11 +7,6 @@ const app = express();
 
 const clientID = '5ba30de86695458089cdc5d89fe0fe9b';
 const redirectURI = 'http://localhost:3000/callback';
-
-app.use(bodyParser.json());       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-    extended: true
-})); 
 
 app.use(express.static(__dirname + '/public'));
  
