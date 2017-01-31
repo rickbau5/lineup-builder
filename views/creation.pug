@@ -1,5 +1,7 @@
 extends layout
 
+include mixins
+
 block content
   div
     form#playlist-info.form-horizontal
@@ -28,5 +30,9 @@ block content
     div#playlist-link.text-center(hidden=true)
       a(href="")
         button.btn.btn-success Open in Spotify
+  br
+  +artist-table("fill")
 
   script(src="javascript/creation.js")
+  script.
+    populateArtistTable();

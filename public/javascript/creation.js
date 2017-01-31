@@ -1,11 +1,29 @@
 $("#select").val(5);
 const api = 'https://api.spotify.com';
 const topTracksEndpoint = '/v1/artists/{artist-id}/top-tracks?country=US'
-var artists = [];
+var found = [];
 var completed = 0;
 var access_token = '';
 var playlistTitle = '';
 var limitTracks = 5;
+
+$("#create-playlist").click(function() {
+    if (verifyTitle() && verifyLimit()) {
+        $("#create-playlist").hide();
+        $("#progress").show();
+
+        go((uri) => {
+            $("#progress").hide();
+            $("#finished").show();
+            $("#playlist-link a").attr('href', uri);
+            $("#playlist-link").show();
+        });
+    }
+});
+
+$(document).on('click', 'button.artist-remove', function() {
+    $("#create-playlist").prop("disabled", found.length == 0);
+});
 
 function topTracksQuery(id) {
     return api + topTracksEndpoint.replace("{artist-id}", id);
@@ -130,23 +148,6 @@ function addTracksToPlaylist(username, playlist, allTracks, callback) {
         });
 }
 
-$("#create-playlist").click(function() {
-    if (verifyTitle() && verifyLimit()) {
-        $("#create-playlist").attr('disabled', true);
-        $("#progress").show();
-
-        console.log(limitTracks);
-        console.log(playlistTitle);
-
-        go((uri) => {
-            $("#progress").hide();
-            $("#finished").show();
-            $("#playlist-link a").attr('href', uri);
-            $("#playlist-link").show();
-        });
-    }
-});
-
 function verifyTitle() {
     const input = $("#title")
     if (input.val() === '') {
@@ -170,6 +171,18 @@ function verifyLimit() {
     }
 }
 
+function populateArtistTable() {
+    found = JSON.parse(localStorage.getItem('artists-found'));
+    if (typeof found === "undefined" ||found.length == 0) {
+        alert("No artists found. Please start over.");
+    } else {
+        found .forEach(artist => {
+            const row = addArtistToTable(artist.name);
+            row.find(".artist-remove").prop("disabled", false);
+        });
+    }
+}
+
 function go(callback) {
     var path = window.location.href
     var parts = path.substring(path.lastIndexOf("#") + 1).split("&");
@@ -179,9 +192,8 @@ function go(callback) {
       params[kv[0]] = kv[1];
     });
 
-    artists = JSON.parse(localStorage.getItem('artists-found'));
 
-    if (artists.length == 0) {
+    if (found.length == 0) {
         alert("No artists found? Please start over.");
         return;
     }
@@ -194,7 +206,7 @@ function go(callback) {
     access_token = params['access_token'];
 
     getUsername(function(username) {
-      collectTopTracks(artists, function(allTracks) {
+      collectTopTracks(found, function(allTracks) {
           const sum = allTracks.map(tracks => { return tracks.length })
               .reduce((a, b) => { return a + b; }, 0);
           if (sum == 0) {

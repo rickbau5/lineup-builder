@@ -1,5 +1,7 @@
 extends layout
 
+include mixins
+
 block content
   div
     form
@@ -8,20 +10,13 @@ block content
           label.control-label(for="artists") Artists:
           div
             textarea#artists.form-control(name="artists" rows="3" placeholder="Artist One, Artist Two, ...")
-            span.help-block Enter up to 50 artists separated by commas.
+            span.help-block Enter artists separated by commas.
         div.text-center
           div.btn-group(role="group" aria-label="...")
             button#add-artists.btn.btn-default(type="button") Add Artists
             button#create-playlist.btn.btn-default(type="button") Next Step
   br
-  div#artist-wrapper
-    table#artist-table.table.table-striped.table-hover.table-bordered
-      thead
-        tr
-          th Artist
-          th Found
-          th Remove
-      tbody#fill
+  +artist-table("fill")
 
   script.
     var clientID = '#{clientID}';

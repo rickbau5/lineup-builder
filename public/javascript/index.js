@@ -22,14 +22,9 @@ $("#create-playlist").click(function() {
 });
 
 $(document).on('click', 'button.artist-remove', function() {
-    // before deleting, remove it from the list of found artists
-    const name = $(this).closest('tr').children('td.artist-name').text();
-    found = found.filter(function (artist) { return name !== artist.name; });
-
-    $(this).closest('tr').remove();
-
     createBtn.prop("disabled", found.length == 0);
 });
+
 
 function artistQuery(artistName) {
     return api + 
@@ -43,12 +38,7 @@ $("#add-artists").click(function () {
       .filter(entry => { return entry !== '' });
 
     artists.forEach(function (artist) {
-      const rowHtml = '<tr><td class="artist-name">' + artist + '</td>' + 
-        '<td class="artist-found">' + loading + '</td>' +
-        '<td><button class="btn btn-xs btn-danger artist-remove" disabled=true><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
-      $("#fill").append(rowHtml);
-
-      const row = $("#fill").children().slice(-1);
+      const row = addArtistToTable(artist, "glyphicon glyphicon-refresh spinning");
       const tdName = row.find(".artist-name"); 
       const tdFound = row.find(".artist-found");
       const tdRemove = row.find(".artist-remove");

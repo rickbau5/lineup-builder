@@ -1,0 +1,34 @@
+mixin artist-table(tableId)
+  div#artist-wrapper
+    table.table.table-striped.table-hover.table-bordered
+      thead
+        tr
+          th Artist
+          th Found
+          th Remove
+      tbody(id="" + tableId)
+  script.
+    const table = $("#" + "#{tableId}");
+
+    $(document).on('click', 'button.artist-remove', function() {
+        // before deleting, remove it from the list of found artists
+        const name = $(this).closest('tr').children('td.artist-name').text();
+        found = found.filter(function (artist) { return name !== artist.name; });
+
+        $(this).closest('tr').remove();
+    });
+
+
+    function getRowHtml(artistName, glyphiconClasses) {
+        if (typeof glyphiconClasses === "undefined") {
+            glyphiconClasses = "glyphicon glyphicon-ok";
+        }
+        return '<tr><td class="artist-name">' + artistName + '</td>' + 
+          '<td class="artist-found"><i class="' + glyphiconClasses + '"></i></td>' +
+          '<td><button class="btn btn-xs btn-danger artist-remove" disabled=true><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
+    }
+
+    function addArtistToTable(artistName, glyphiconClasses) {
+        table.append(getRowHtml(artistName, glyphiconClasses));
+        return table.children().slice(-1);
+    }
