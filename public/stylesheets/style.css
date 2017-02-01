@@ -76,13 +76,8 @@ a:hover {
     margin-bottom: 20px;
 }
 
-.media {
-    height: 64px;
-    padding-bottom: 10px;
-}
-
-.media img {
-    padding-right: 5px;
+#help-panel {
+    width: 250px;
 }
 
 .no-overflow {

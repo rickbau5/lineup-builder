@@ -18,9 +18,17 @@ html
     link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/darkly/bootstrap.min.css", rel="stylesheet", integrity="sha384-kVo/Eh0sv7ZdiwZK32nRsp1FrDT3sLRLx3zVpSSTI9UdO5H02LJNLBg5F1gwvKg0", crossorigin="anonymous")
   body
     nav.navbar.navbar-default
-      div.container-fluid
+      div.container
         div.navbar-header.navbar-brand
           | Lineup Builder
+        ul.nav(style="float:right;")
+          li.dropdown
+            button.btn.btn-default.navbar-btn.dropdown-toggle(href="#" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="font-size:16px;")
+              | ?
+            ul.dropdown-menu.dropdown-menu-right
+              li#help-panel.panel-body
+                | This App can help you create playlists for Spotify. Enter some artists to create a playlist!
+
     div.container.custom-container
       block content
     div.footer
