@@ -2,8 +2,9 @@
   "name": "lineup-builder",
   "version": "0.1.0",
   "description": "Generate playlists off a lineup",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "repository": { 
+      "type" : "git", 
+      "url" : "https://github.com/rickbau5/lineup-builder.git"
   },
   "author": "Rick Boss",
   "license": "ISC",
