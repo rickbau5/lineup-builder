@@ -60,12 +60,12 @@ body {
     text-align: center;
 }
 
-a {
+a#title {
     color: #fff !important;
     text-decoration: none !important;
 }
 
-a:hover {
+a:hover#title {
     color: #CCC !important;
 }
 
