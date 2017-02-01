@@ -1,11 +1,18 @@
 $("#select").val(5);
+
 const api = 'https://api.spotify.com';
 const topTracksEndpoint = '/v1/artists/{artist-id}/top-tracks?country=US'
+const iframeSrc = "https://embed.spotify.com/?uri={uri}"
+
 var found = [];
 var completed = 0;
 var access_token = '';
 var playlistTitle = '';
 var limitTracks = 5;
+
+$(document).on('click', 'button.artist-remove', function() {
+    $("#create-playlist").prop("disabled", found.length == 0);
+});
 
 $("#create-playlist").click(function() {
     if (verifyTitle() && verifyLimit()) {
@@ -17,12 +24,13 @@ $("#create-playlist").click(function() {
             $("#finished").show();
             $("#playlist-link a").attr('href', uri);
             $("#playlist-link").show();
+            $("#artist-wrapper").hide();
+            if (typeof uri !== 'undefined' && uri !== '') {
+                $("#playlist-frame").attr('src', iframeSrc.replace("{uri}", uri));
+                $("#playlist-frame").show();
+            }
         });
     }
-});
-
-$(document).on('click', 'button.artist-remove', function() {
-    $("#create-playlist").prop("disabled", found.length == 0);
 });
 
 function topTracksQuery(id) {
@@ -149,7 +157,7 @@ function addTracksToPlaylist(username, playlist, allTracks, callback) {
 }
 
 function verifyTitle() {
-    const input = $("#title")
+    const input = $("#playlist-title")
     if (input.val() === '') {
         $("#title-help").removeClass("hidden");       
         return false;

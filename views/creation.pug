@@ -8,9 +8,9 @@ block content
       fieldset
         legend Playlist Info
         div.form-group
-          label.col-xs-2.control-label(for="title") Title:
+          label.col-xs-2.control-label(for="playlist-title") Title:
           div.col-xs-10
-            input#title.form-control(type="text" placeholder="New Playlist")
+            input#playlist-title.form-control(type="text" placeholder="New Playlist")
             span#title-help.hidden.help-block A title is required.
         div.form-group
           label.col-xs-2.control-label(for="select") Tracks:
@@ -32,6 +32,9 @@ block content
         button.btn.btn-success Open in Spotify
   br
   +artist-table("fill")
+
+  div.text-center
+    iframe#playlist-frame(src="" width="300" height="380" frameborder="0" allowtransparency="true" hidden=true)
 
   script(src="javascript/creation.js")
   script.
