@@ -61,7 +61,8 @@ body {
 }
 
 a {
-    color: #1DB954 !important;
+    color: #fff !important;
+    text-decoration: none !important;
 }
 
 a:hover {
