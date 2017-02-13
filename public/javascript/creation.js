@@ -14,7 +14,14 @@ $(document).on('click', 'button.artist-remove', function() {
     $("#create-playlist").prop("disabled", found.length == 0);
 });
 
-$("#create-playlist").click(function() {
+$(document).ready(function() {
+    $("#playlist-info").on("submit", function(e) {
+        doCreate();
+        e.preventDefault();
+    });
+});
+
+function doCreate() {
     if (verifyTitle() && verifyLimit()) {
         $("#create-playlist").hide();
         $("#progress").show();
@@ -31,7 +38,7 @@ $("#create-playlist").click(function() {
             }
         });
     }
-});
+}
 
 function topTracksQuery(id) {
     return api + topTracksEndpoint.replace("{artist-id}", id);
